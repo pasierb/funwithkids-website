@@ -1,7 +1,13 @@
 ---
 import { SITE_CONFIG } from '~/utils/config';
 ---
-
+<style>
+  img {
+    height: 1.5em;
+    margin-right: 0.3em;
+    display: inline-block;
+  }
+</style>
 <span class="self-center ml-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white">
-  🚀 {SITE_CONFIG?.name}
+  <img src="fwk.png" class="text-3xl" /> {SITE_CONFIG?.name}
 </span>
