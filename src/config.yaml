@@ -11,14 +11,14 @@ metadata:
   title:
     default: FunWithKids.ch
     template: '%s — FunWithKids.ch'
-  description: "\U0001F680 Suitable for Startups, Small Business, Sass Websites, Professional Portfolios, Marketing Websites, Landing Pages & Blogs."
+  description: "Discover, Enjoy, Swiss Family Adventures."
   robots:
     index: true
     follow: true
   openGraph:
     site_name: FunWithKids.ch
     images:
-      - url: '~/assets/images/default.png'
+      - url: '~/public/images/fwk.png'
         width: 1200
         height: 628
     type: website
