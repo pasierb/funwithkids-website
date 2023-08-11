@@ -4,6 +4,7 @@ import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import InterestList from '~/components/widgets/InterestList.astro';
 import SpotsMap from '~/components/widgets/SpotsMap.astro';
+import { getSpots } from '~/services/spotsService';
 
 const metadata = {
   title: 'FunWithKids.ch',
@@ -28,6 +29,7 @@ const features = [
     title: 'Bring your furry friend along - find places that welcome your dog too!',
   },
 ];
+const spots = await getSpots();
 ---
 
 <Layout metadata={metadata}>
@@ -53,7 +55,7 @@ const features = [
     </Fragment>
   </Hero>
 
-  <SpotsMap />
+  <SpotsMap spots={spots} />
 
   <section class="relative">
     <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
