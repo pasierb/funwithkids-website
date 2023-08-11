@@ -3,6 +3,7 @@ import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
 import InterestList from '~/components/widgets/InterestList.astro';
+import SpotsMap from '~/components/widgets/SpotsMap.astro';
 
 const metadata = {
   title: 'FunWithKids.ch',
@@ -51,6 +52,8 @@ const features = [
       </div>
     </Fragment>
   </Hero>
+
+  <SpotsMap />
 
   <section class="relative">
     <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">

@@ -1,0 +1,64 @@
+---
+import 'leaflet/dist/leaflet.css';
+
+interface Spot {
+  id: number;
+  name: string;
+  lat: number;
+  lng: number;
+  attractions: {
+    title: string;
+    ageFrom: number;
+    ageTo: number;
+  }[];
+}
+
+const spots: Spot[] = [
+  {
+    id: 4,
+    name: 'Freiruum',
+    lat: 47.17674491319202,
+    lng: 8.513148398803247,
+    attractions: [],
+  },
+];
+---
+
+<script>
+  import * as Leaflet from 'leaflet';
+
+  class SpotsMap extends HTMLElement {
+    /**
+     * @type {Leaflet.Map}
+     */
+    map;
+    /**
+     * @type {{id: number, name: string, lat: number, lng: number}[]}
+     */
+    spots;
+
+    constructor() {
+      super();
+      this.spots = JSON.parse(this.dataset.spots!);
+    }
+
+    connectedCallback() {
+      this.map = Leaflet.map(this).setView([47.16646223589143, 8.515760000580993], 13);
+      Leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(this.map);
+
+      this.updateSpots();
+    }
+
+    updateSpots() {
+      this.spots.forEach((spot) => {
+        Leaflet.marker([spot.lat, spot.lng]).addTo(this.map).bindPopup(spot.name);
+      });
+    }
+  }
+
+  customElements.define('spots-map', SpotsMap);
+</script>
+
+<spots-map style="height: 75vh; display: block;" data-spots={JSON.stringify(spots)}></spots-map>
