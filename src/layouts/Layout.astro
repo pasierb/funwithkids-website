@@ -19,6 +19,7 @@ export interface Props {
   metadata?: MetaDataType;
 }
 
+const isProd = import.meta.env.PROD;
 const { metadata = {} } = Astro.props;
 const { language, textDirection } = I18N_CONFIG;
 ---
@@ -26,7 +27,15 @@ const { language, textDirection } = I18N_CONFIG;
 <!DOCTYPE html>
 <html lang={language} dir={textDirection} class="2xl:text-[20px]">
   <head>
-    <script is:inline src="https://js.sentry-cdn.com/4301a979f6d90306ff5d23898127270c.min.js" crossorigin="anonymous"></script>
+    {
+      isProd && (
+        <script
+          is:inline
+          src="https://js.sentry-cdn.com/4301a979f6d90306ff5d23898127270c.min.js"
+          crossorigin="anonymous"
+        ></script>
+      )
+    }
     <CommonMeta />
     <Favicons />
     <CustomStyles />
