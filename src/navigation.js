@@ -150,6 +150,6 @@ export const footerData = {
     // { ariaLabel: 'Github', icon: 'tabler:brand-github', href: 'https://github.com/onwidget/astrowind' },
   ],
   footNote: `
-    Made by <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://onwidget.com/"> Michal Pasierbski</a> · All rights reserved.
+    Made by <a class="text-blue-600 hover:underline dark:text-gray-200" href="https://www.linkedin.com/in/mpasierbski/"> Michal Pasierbski</a> · All rights reserved.
   `,
 };
