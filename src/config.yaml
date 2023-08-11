@@ -63,8 +63,8 @@ apps:
 analytics:
   vendors:
     googleAnalytics:
-      isEnabled: false
-      id: null # or "G-XXXXXXXXXX"
+      isEnabled: true
+      id: "G-N9H3ZHDQ8D"
 
 ui:
   theme: 'light:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"
