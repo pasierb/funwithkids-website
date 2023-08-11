@@ -1,5 +1,6 @@
 ---
 import { SITE_CONFIG } from '~/utils/config';
+import logoImage from "~/assets/images/fwk.png";
 ---
 <style>
   img {
@@ -9,5 +10,5 @@ import { SITE_CONFIG } from '~/utils/config';
   }
 </style>
 <span class="self-center ml-2 text-2xl md:text-xl font-bold text-gray-900 whitespace-nowrap dark:text-white">
-  <img src="fwk.png" class="text-3xl" /> {SITE_CONFIG?.name}
+  <img src={logoImage.src} class="text-3xl" /> {SITE_CONFIG?.name}
 </span>
