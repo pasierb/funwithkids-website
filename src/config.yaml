@@ -11,7 +11,7 @@ metadata:
   title:
     default: FunWithKids.ch
     template: '%s — FunWithKids.ch'
-  description: "Discover, Enjoy, Swiss Family Adventures."
+  description: 'Discover, Enjoy, Swiss Family Adventures.'
   robots:
     index: true
     follow: true
@@ -64,7 +64,7 @@ analytics:
   vendors:
     googleAnalytics:
       isEnabled: true
-      id: "G-N9H3ZHDQ8D"
+      id: 'G-N9H3ZHDQ8D'
 
 ui:
   theme: 'light:only' # Values: "system" | "light" | "dark" | "light:only" | "dark:only"

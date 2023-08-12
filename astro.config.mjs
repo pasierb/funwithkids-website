@@ -33,7 +33,7 @@ export default defineConfig({
 
   integrations: [
     tailwind({
-      applyBaseStyles: false
+      applyBaseStyles: false,
     }),
     sitemap(),
     image({
