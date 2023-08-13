@@ -1,0 +1,26 @@
+---
+import PageLayout from "~/layouts/PageLayout.astro";
+import Headline from "~/components/blog/Headline.astro";
+import InterestList from '~/components/widgets/InterestList.astro';
+---
+
+<PageLayout>
+  <div class="py-12">
+    <Headline
+      title="🎉 Thank You for Sharing the Fun! 🎉"
+      subtitle="We're excited to explore it. Our team will review it shortly. Stay tuned for more family fun!" />
+  </div>
+
+  <section class="relative">
+    <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
+      <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
+    </div>
+    <div class="relative px-4 md:px-6 py-12 md:py-16 lg:py-20 text-default max-w-screen-xl mx-auto">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-3xl">
+          <InterestList />
+        </div>
+      </div>
+    </div>
+  </section>
+</PageLayout>

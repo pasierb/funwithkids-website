@@ -11,7 +11,7 @@ import { getSpots } from '~/services/spotsService';
 interface FilterItem {
   id: keyof SpotFilters;
   name: string;
-  options: { label: string, value: string }[];
+  options: { label: string; value: string }[];
 }
 
 const filters: FilterItem[] = [
@@ -52,8 +52,11 @@ export default function Example() {
     const inputName = event.target.name;
     const formData = new FormData(event.target.form!);
 
-    $spotFilters.setKey(key, formData.getAll(inputName).map((value) => value.toString()));
-  }
+    $spotFilters.setKey(
+      key,
+      formData.getAll(inputName).map((value) => value.toString())
+    );
+  };
 
   return (
     <div className="bg-white">
@@ -193,7 +196,6 @@ export default function Example() {
             {/* Product grid */}
             <div className="mt-6 lg:col-span-3 lg:mt-0 xl:col-span-4">
               <div className={mobileFiltersOpen ? 'hidden' : undefined}>
-
                 <SpotsMap />
               </div>
             </div>
