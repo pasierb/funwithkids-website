@@ -1,8 +1,10 @@
 ---
 import Layout from '~/layouts/PageLayout.astro';
-
 import Hero from '~/components/widgets/Hero.astro';
 import InterestList from '~/components/widgets/InterestList.astro';
+import SpotsMapFull from '~/components/widgets/SpotsMapFull';
+import { FeatureFlag } from '~/features';
+import { isFeatureEnabled } from '~/utils/featureFlags';
 
 const metadata = {
   title: 'FunWithKids.ch',
@@ -27,6 +29,7 @@ const features = [
     title: 'Bring your furry friend along - find places that welcome your dog too!',
   },
 ];
+const isMapEnabled = isFeatureEnabled(FeatureFlag.map);
 ---
 
 <Layout metadata={metadata}>
@@ -34,8 +37,7 @@ const features = [
     title="Discover, Enjoy, Swiss Family Adventures."
     subtitle="Explore our app for awesome kid-friendly spots in Switzerland! Unleash joyful adventures, create memories, and unwind while your little ones play. Crafted by parents, for parents – your family's perfect guide!"
   >
-    <Fragment slot="content">
-
+    <div slot="content">
       <div class="mx-auto max-w-3xl">
         <!-- Content goes here -->
         <ul class="text-lg">
@@ -49,8 +51,10 @@ const features = [
           }
         </ul>
       </div>
-    </Fragment>
+    </div>
   </Hero>
+
+  {isMapEnabled && <SpotsMapFull client:only="react" />}
 
   <section class="relative">
     <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
