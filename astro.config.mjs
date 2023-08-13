@@ -5,6 +5,7 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 import image from '@astrojs/image';
 import mdx from '@astrojs/mdx';
+import react from '@astrojs/react';
 import icon from 'astro-icon';
 import partytown from '@astrojs/partytown';
 import { readingTimeRemarkPlugin } from './src/utils/frontmatter.mjs';
@@ -59,6 +60,7 @@ export default defineConfig({
       })
     ),
     lit(),
+    react(),
   ],
   markdown: {
     remarkPlugins: [readingTimeRemarkPlugin],
