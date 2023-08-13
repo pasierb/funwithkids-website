@@ -14,12 +14,10 @@ export function SpotsMap() {
     Leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
-    
+
     $spots.subscribe((spots) => {
       markers.forEach((marker) => marker.remove());
-      markers = spots.map((spot) => 
-        Leaflet.marker([spot.lat, spot.lng]).addTo(map)
-      );
+      markers = spots.map((spot) => Leaflet.marker([spot.lat, spot.lng]).addTo(map));
     });
 
     return () => {

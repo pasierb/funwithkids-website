@@ -11,7 +11,7 @@ export const headerData = {
       href: getPermalink('/about'),
     },
   ],
-  actions: [],
+  actions: [{ type: 'button', text: 'Add a spot!', href: getPermalink('/add-spot') }],
 };
 
 export const footerData = {

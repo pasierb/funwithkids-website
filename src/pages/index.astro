@@ -5,6 +5,7 @@ import InterestList from '~/components/widgets/InterestList.astro';
 import SpotsMapFull from '~/components/widgets/SpotsMapFull';
 import { FeatureFlag } from '~/features';
 import { isFeatureEnabled } from '~/utils/featureFlags';
+import { getPermalink } from '~/utils/permalinks';
 
 const metadata = {
   title: 'FunWithKids.ch',
@@ -36,9 +37,13 @@ const isMapEnabled = isFeatureEnabled(FeatureFlag.map);
   <Hero
     title="Discover, Enjoy, Swiss Family Adventures."
     subtitle="Explore our app for awesome kid-friendly spots in Switzerland! Unleash joyful adventures, create memories, and unwind while your little ones play. Crafted by parents, for parents – your family's perfect guide!"
+    callToAction2={{
+      text: 'Help us build, add a spot!',
+      href: getPermalink('add-spot'),
+    }}
   >
     <div slot="content">
-      <div class="mx-auto max-w-3xl">
+      <div class="mx-auto max-w-3xl pt-12">
         <!-- Content goes here -->
         <ul class="text-lg">
           {
