@@ -31,6 +31,9 @@ i18n:
   language: en
   textDirection: ltr
 
+featureFlags:
+  map: false
+
 apps:
   blog:
     isEnabled: false
