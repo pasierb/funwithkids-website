@@ -8,12 +8,33 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
 ---
 
 <script>
-  import { getSpots } from '~/services/spotsService';
-  import { $allSpots } from '~/stores/spots.store';
+  import { $spots } from '~/stores/spots.store';
+  import { $spotFilters } from '~/stores/spotFilters.store'
+  import { supabaseClient } from '~/services/supabase';
 
-  getSpots().then(spots => {
-    $allSpots.set(spots);
-  });
+  function updateSpots() {
+    let spotsQuery = supabaseClient.from('spots').select('*');
+
+    const filters = $spotFilters.get();
+    filters.amenities?.forEach(amenity => {
+      spotsQuery = spotsQuery.is(amenity, true);
+    });
+
+    if (filters.query) {
+      spotsQuery = spotsQuery.ilike('name', `%${filters.query}%`);
+    }
+
+    spotsQuery.then(({ data: spots, error }) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      $spots.set(spots);
+    });
+  }
+
+  $spotFilters.subscribe(updateSpots);
 </script>
 
 <Layout>
