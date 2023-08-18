@@ -11,6 +11,7 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
   import { $spots } from '~/stores/spots.store';
   import { $spotFilters } from '~/stores/spotFilters.store'
   import { supabaseClient } from '~/services/supabase';
+  import  debounce  from 'lodash-es/debounce';
 
   function updateSpots() {
     let spotsQuery = supabaseClient.from('spots').select('*');
@@ -19,7 +20,6 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
     filters.amenities?.forEach(amenity => {
       spotsQuery = spotsQuery.is(amenity, true);
     });
-
     if (filters.query) {
       spotsQuery = spotsQuery.ilike('name', `%${filters.query}%`);
     }
@@ -34,7 +34,7 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
     });
   }
 
-  $spotFilters.subscribe(updateSpots);
+  $spotFilters.subscribe(debounce(updateSpots, 500));
 </script>
 
 <Layout>
