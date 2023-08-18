@@ -22,7 +22,7 @@ export function SpotsMap(props: SpotsMapProps) {
     $spots.subscribe((spots) => {
       markers.forEach((marker) => marker.remove());
       markers = spots.map((spot) => 
-        Leaflet.marker([spot.lat, spot.lng])
+        Leaflet.marker([spot.lat, spot.lon])
           .addTo(map)
           .on('click', () => {
             $selectedSpot.set(spot);
@@ -32,7 +32,7 @@ export function SpotsMap(props: SpotsMapProps) {
     $selectedSpot.subscribe((spot) => {
       if (!spot) return;
 
-      map.panTo([spot.lat, spot.lng]);
+      map.panTo([spot.lat, spot.lon]);
     });
 
     return () => {

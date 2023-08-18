@@ -1,10 +1,24 @@
-import { atom, computed } from 'nanostores';
-import type { Spot } from '~/services/spotsService';
-import { $spotFilters } from '~/stores/spotFilters.store';
-import { SpotFilterService } from '~/services/SpotsFilterService';
+import { atom } from 'nanostores';
 
-export const $allSpots = atom<Spot[]>([]);
-export const $spots = computed([$allSpots, $spotFilters], (spots, spotFilters) => {
-  return spots.filter((spot) => new SpotFilterService(spot).matches(spotFilters));
-});
+export type AttractionType = 'trampoline_park' | 'playground' | 'parkour';
+
+export interface SpotAttraction {
+  name: string;
+  type: AttractionType;
+  age_from: number;
+  age_to: number;
+}
+
+export interface Spot {
+  created_at: string;
+  has_restaurant: boolean;
+  has_toilet: boolean;
+  id: number;
+  lat: number;
+  lon: number;
+  name: string;
+  spot_attractions?: SpotAttraction[];
+}
+
+export const $spots = atom<Spot[]>([]);
 export const $selectedSpot = atom<Spot | null>(null);

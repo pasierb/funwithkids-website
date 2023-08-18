@@ -1,5 +1,5 @@
 ---
-import Layout from "~/layouts/Layout.astro";
+import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/widgets/Header.astro';
 import { headerData } from '~/navigation';
 import { SpotsMap } from '~/components/widgets/spots/SpotsMap';
@@ -8,12 +8,42 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
 ---
 
 <script>
-  import { getSpots } from '~/services/spotsService';
-  import { $allSpots } from '~/stores/spots.store';
+  import { $spots } from '~/stores/spots.store';
+  import { $spotFilters } from '~/stores/spotFilters.store';
+  import { supabaseClient } from '~/services/supabase';
+  import debounce from 'lodash-es/debounce';
 
-  getSpots().then(spots => {
-    $allSpots.set(spots);
-  });
+  function updateSpots() {
+    let spotsQuery = supabaseClient.from('spots').select(`
+        *,
+        spot_attractions (
+          name,
+          type,
+          age_from,
+          age_to
+        )
+      `);
+
+    const filters = $spotFilters.get();
+    filters.amenities?.forEach((amenity) => {
+      spotsQuery = spotsQuery.is(amenity, true);
+    });
+    if (filters.query) {
+      spotsQuery = spotsQuery.ilike('name', `%${filters.query}%`);
+    }
+
+    spotsQuery.then(({ data: spots, error }) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      console.log(spots);
+      $spots.set(spots);
+    });
+  }
+
+  $spotFilters.subscribe(debounce(updateSpots, 500));
 </script>
 
 <Layout>
@@ -32,7 +62,7 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
         <SpotsMap client:only="react" className="grow" />
       </div>
     </div>
-  <div>
-
-
+    <div></div>
+  </div>
 </Layout>
+~/components/widgets/spots/SpotsFilterBar/SpotsFilterBar

@@ -2,9 +2,6 @@
 import Layout from '~/layouts/PageLayout.astro';
 import Hero from '~/components/widgets/Hero.astro';
 import InterestList from '~/components/widgets/InterestList.astro';
-import SpotsMapFull from '~/components/widgets/SpotsMapFull';
-import { FeatureFlag } from '~/features';
-import { isFeatureEnabled } from '~/utils/featureFlags';
 import { getPermalink } from '~/utils/permalinks';
 
 const metadata = {
@@ -30,7 +27,6 @@ const features = [
     title: 'Bring your furry friend along - find places that welcome your dog too!',
   },
 ];
-const isMapEnabled = isFeatureEnabled(FeatureFlag.map);
 ---
 
 <Layout metadata={metadata}>
@@ -58,8 +54,6 @@ const isMapEnabled = isFeatureEnabled(FeatureFlag.map);
       </div>
     </div>
   </Hero>
-
-  {isMapEnabled && <SpotsMapFull client:only="react" />}
 
   <section class="relative">
     <div class="absolute inset-0 pointer-events-none -z-[1]" aria-hidden="true">
