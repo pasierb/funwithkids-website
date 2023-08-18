@@ -1,10 +1,14 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, HTMLAttributes } from 'react';
 import * as Leaflet from 'leaflet';
-import { $spots } from '~/stores/spots.store';
+import { $spots, $selectedSpot } from '~/stores/spots.store';
 
 import 'leaflet/dist/leaflet.css';
 
-export function SpotsMap() {
+interface SpotsMapProps extends HTMLAttributes<HTMLDivElement> {
+
+}
+
+export function SpotsMap(props: SpotsMapProps) {
   const mapElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -17,7 +21,18 @@ export function SpotsMap() {
 
     $spots.subscribe((spots) => {
       markers.forEach((marker) => marker.remove());
-      markers = spots.map((spot) => Leaflet.marker([spot.lat, spot.lng]).addTo(map));
+      markers = spots.map((spot) => 
+        Leaflet.marker([spot.lat, spot.lng])
+          .addTo(map)
+          .on('click', () => {
+            $selectedSpot.set(spot);
+          })
+      );
+    });
+    $selectedSpot.subscribe((spot) => {
+      if (!spot) return;
+
+      map.panTo([spot.lat, spot.lng]);
     });
 
     return () => {
@@ -25,5 +40,5 @@ export function SpotsMap() {
     };
   }, [$spots]);
 
-  return <div className="w-full h-[75vh]" ref={mapElement}></div>;
+  return <div {...props} ref={mapElement}></div>;
 }

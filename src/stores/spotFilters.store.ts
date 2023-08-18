@@ -3,6 +3,7 @@ import { map } from 'nanostores';
 export type SpotFilters = {
   age?: string[];
   environment?: string[];
+  query?: string;
 };
 
 export enum SpotEnvironment {

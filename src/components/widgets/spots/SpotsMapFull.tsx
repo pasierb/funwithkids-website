@@ -5,7 +5,7 @@ import { ChevronDownIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { SpotsMap } from './SpotsMap';
 import { SpotEnvironment } from '~/stores/spotFilters.store';
 import { $spotFilters, SpotFilters } from '~/stores/spotFilters.store';
-import { $allSpots } from '~/stores/spots.store';
+import { $allSpots, $selectedSpot, $spots } from '~/stores/spots.store';
 import { getSpots } from '~/services/spotsService';
 
 interface FilterItem {
@@ -46,6 +46,7 @@ export default function Example() {
     getSpots().then((spots) => {
       $allSpots.set(spots);
     });
+
   }, [getSpots]);
 
   const handleFilterChange = (event: ChangeEvent<HTMLInputElement>, key: keyof SpotFilters) => {

@@ -40,11 +40,18 @@ export class SpotAttractionFilterService {
 export class SpotFilterService {
   constructor(public spot: Spot) {}
 
+  static query(spot: Spot, query: string | undefined): boolean {
+    if (!query) return true;
+
+    return spot.name.toLowerCase().includes(query.toLowerCase());
+  }
+
   matches(filters: SpotFilters): boolean {
     const matchesAttractions = this.spot.attractions.some((attraction) =>
       new SpotAttractionFilterService(attraction).matches(filters)
     );
+    const matchesQuery = SpotFilterService.query(this.spot, filters.query);
 
-    return matchesAttractions;
+    return matchesAttractions && matchesQuery;
   }
 }

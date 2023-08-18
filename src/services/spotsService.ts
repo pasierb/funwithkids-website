@@ -49,8 +49,24 @@ const spots: Spot[] = [
       },
     ],
   },
+  {
+    name: 'Fronalpstock',
+    lat: 46.96910874487854,
+    lng: 8.637157732125562,
+    hasFood: true,
+    hasToilet: true,
+    attractions: [
+      {
+        title: 'Playground',
+        ageFrom: 4,
+        ageTo: 12,
+        environment: SpotEnvironment.Outdoors,
+      }
+    ],
+  }
 ];
 
 export async function getSpots(): Promise<Spot[]> {
-  return spots;
+  return await window.fetch('http://localhost:3001/api/v1/spots').then((response) => response.json());
+  // return spots;
 }
