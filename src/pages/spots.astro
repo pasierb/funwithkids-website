@@ -1,5 +1,5 @@
 ---
-import Layout from "~/layouts/Layout.astro";
+import Layout from '~/layouts/Layout.astro';
 import Header from '~/components/widgets/Header.astro';
 import { headerData } from '~/navigation';
 import { SpotsMap } from '~/components/widgets/spots/SpotsMap';
@@ -9,15 +9,23 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
 
 <script>
   import { $spots } from '~/stores/spots.store';
-  import { $spotFilters } from '~/stores/spotFilters.store'
+  import { $spotFilters } from '~/stores/spotFilters.store';
   import { supabaseClient } from '~/services/supabase';
-  import  debounce  from 'lodash-es/debounce';
+  import debounce from 'lodash-es/debounce';
 
   function updateSpots() {
-    let spotsQuery = supabaseClient.from('spots').select('*');
+    let spotsQuery = supabaseClient.from('spots').select(`
+        *,
+        spot_attractions (
+          name,
+          type,
+          age_from,
+          age_to
+        )
+      `);
 
     const filters = $spotFilters.get();
-    filters.amenities?.forEach(amenity => {
+    filters.amenities?.forEach((amenity) => {
       spotsQuery = spotsQuery.is(amenity, true);
     });
     if (filters.query) {
@@ -30,6 +38,7 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
         return;
       }
 
+      console.log(spots);
       $spots.set(spots);
     });
   }
@@ -53,7 +62,6 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
         <SpotsMap client:only="react" className="grow" />
       </div>
     </div>
-  <div>
-
-
+    <div></div>
+  </div>
 </Layout>

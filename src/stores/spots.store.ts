@@ -1,6 +1,15 @@
 import { atom } from 'nanostores';
 
-interface Spot {
+export type AttractionType = 'trampoline_park' | 'playground' | 'parkour';
+
+export interface SpotAttraction {
+  name: string;
+  type: AttractionType;
+  age_from: number;
+  age_to: number;
+}
+
+export interface Spot {
   created_at: string;
   has_restaurant: boolean;
   has_toilet: boolean;
@@ -8,6 +17,7 @@ interface Spot {
   lat: number;
   lon: number;
   name: string;
+  spot_attractions?: SpotAttraction[];
 }
 
 export const $spots = atom<Spot[]>([]);

@@ -17,6 +17,7 @@ export interface Database {
           id: number
           name: string
           spot_id: number
+          type: Database["public"]["Enums"]["attraction_type"] | null
         }
         Insert: {
           age_from?: number
@@ -25,6 +26,7 @@ export interface Database {
           id?: number
           name: string
           spot_id: number
+          type?: Database["public"]["Enums"]["attraction_type"] | null
         }
         Update: {
           age_from?: number
@@ -33,6 +35,7 @@ export interface Database {
           id?: number
           name?: string
           spot_id?: number
+          type?: Database["public"]["Enums"]["attraction_type"] | null
         }
         Relationships: [
           {
@@ -81,7 +84,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      attraction_type: "playground" | "trampoline_park" | "parkour"
     }
     CompositeTypes: {
       [_ in never]: never
