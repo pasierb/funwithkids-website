@@ -28,7 +28,7 @@ export function SpotsList() {
     <Fragment>
       {!selectedSpot ? (<ul role="list" className="divide-y divide-gray-100">
         {spots.map((spot) => <SpotsListItem
-          key={[spot.lat, spot.lng].join('-')}
+          key={[spot.lat, spot.lon].join('-')}
           spot={spot}
           onSelect={handleSelectSpot}
         />)}

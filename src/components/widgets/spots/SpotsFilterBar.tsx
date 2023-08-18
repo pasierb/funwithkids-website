@@ -1,19 +1,19 @@
-import { Fragment, useState, ChangeEvent } from 'react'
-import { Dialog, Disclosure, Menu, Popover, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { $spotFilters, SpotFilters, SpotEnvironment } from '~/stores/spotFilters.store';
+import { Fragment, useState, ChangeEvent } from 'react';
+import { Dialog, Disclosure, Menu, Popover, Transition } from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { $spotFilters, SpotFilters } from '~/stores/spotFilters.store';
 import { SpotsQuickSearch } from '~/components/widgets/spots/SpotsQuickSearch';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#' },
   { name: 'Best Rating', href: '#' },
   { name: 'Newest', href: '#' },
-]
+];
 const filters: {
-  id: keyof SpotFilters,
-  name: string,
-  options: { label: string, value: string }[]
+  id: keyof SpotFilters;
+  name: string;
+  options: { label: string; value: string }[];
 }[] = [
   {
     id: 'age',
@@ -25,18 +25,17 @@ const filters: {
     ],
   },
   {
-    id: 'environment',
-    name: 'Environment',
+    id: 'amenities',
+    name: 'Amenities',
     options: [
-
-      { label: 'Indoors', value: SpotEnvironment.Indoors },
-      { label: 'Outdoors', value: SpotEnvironment.Outdoors },
+      { value: 'has_toilet', label: 'Toilets' },
+      { value: 'has_restaurant', label: 'Restaurant nearby' },
     ],
   },
-]
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
 export function SpotsFilterBar() {
@@ -250,5 +249,5 @@ export function SpotsFilterBar() {
         </section>
       </div>
     </div>
-  )
+  );
 }
