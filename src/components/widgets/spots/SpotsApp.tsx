@@ -66,7 +66,7 @@ export function SpotsApp() {
 
         {(!isMobile || mapOpen) && (
           <div className="grow flex flex-col">
-            <SpotsMap className="grow" />
+            <SpotsMap className="grow" key={`open-${mapOpen}`} />
           </div>
         )}
 
