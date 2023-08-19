@@ -35,7 +35,7 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
       spotsQuery = spotsQuery.ilike('name', `%${filters.query}%`);
     }
 
-    spotsQuery.then(({ data: spots, error }) => {
+    spotsQuery.order('name').then(({ data: spots, error }) => {
       if (error) {
         console.error(error);
         return;

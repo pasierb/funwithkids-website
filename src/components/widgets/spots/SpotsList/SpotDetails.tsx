@@ -1,4 +1,4 @@
-import { AnchorHTMLAttributes, LiHTMLAttributes, ComponentType, ExoticComponent } from 'react';
+import { AnchorHTMLAttributes, LiHTMLAttributes, ComponentType, ExoticComponent, ReactElement } from 'react';
 import type { Spot } from '~/stores/spots.store';
 import { $selectedSpot } from '~/stores/spots.store';
 import { ArrowTopRightOnSquareIcon, GlobeAltIcon, MapIcon } from '@heroicons/react/20/solid';
@@ -34,12 +34,12 @@ export function SpotDetails({ spot }: SpotDetailsProps) {
       <div className="py-8 px-4">
         <ul className="border-t border-gray-100 py-4">
           {spot.website_url && (
-            <AttributeListLitem icon={GlobeAltIcon}>
+            <AttributeListLitem icon={<GlobeAltIcon className="h-6 w-6" />}>
               <LinkOut href={spot.website_url}>{spot.website_url}</LinkOut>
             </AttributeListLitem>
           )}
           {spot.google_maps_url && (
-            <AttributeListLitem icon={MapIcon}>
+            <AttributeListLitem icon={<MapIcon className="h-6 w-6" />}>
               <LinkOut href={spot.google_maps_url}>Open in Google Maps</LinkOut>
             </AttributeListLitem>
           )}
@@ -47,10 +47,9 @@ export function SpotDetails({ spot }: SpotDetailsProps) {
 
         <ul>
           {spot.spot_attractions?.map((attraction, idx) => (
-            <li key={idx}>
-              <SpotAttractionTypeIcon type={attraction.type} />
+            <AttributeListLitem key={idx} icon={<SpotAttractionTypeIcon type={attraction.type} />}>
               {attraction.name}
-            </li>
+            </AttributeListLitem>
           ))}
         </ul>
       </div>
@@ -58,16 +57,10 @@ export function SpotDetails({ spot }: SpotDetailsProps) {
   );
 }
 
-function AttributeListLitem({
-  icon,
-  children,
-  ...rest
-}: LiHTMLAttributes<HTMLLIElement> & { icon: ComponentType<any> | ExoticComponent<any> }) {
-  const IconElement = icon;
-
+function AttributeListLitem({ icon, children, ...rest }: LiHTMLAttributes<HTMLLIElement> & { icon: ReactElement }) {
   return (
     <li {...rest} className="flex gap-4 my-4">
-      <IconElement className="h-6 w-6" />
+      {icon}
       {children}
     </li>
   );
