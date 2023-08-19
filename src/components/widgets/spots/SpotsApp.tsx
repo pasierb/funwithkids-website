@@ -61,7 +61,7 @@ export function SpotsApp() {
 
   return (
     <Fragment>
-      <div className="border-b border-gray-200 px-8">
+      <div className="border-b border-gray-200">
         <SpotsFilterBar />
       </div>
 

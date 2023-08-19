@@ -119,8 +119,8 @@ export function SpotsFilterBar() {
         </Dialog>
       </Transition.Root>
 
-      <div className="mx-auto w-full text-center">
-        <section aria-labelledby="filter-heading" className="border-t border-gray-200 py-4">
+      <div className="mx-auto w-full text-center border-t border-gray-200 px-4">
+        <section aria-labelledby="filter-heading" className="py-4">
           <div className="flex items-center justify-between">
             <Menu as="div" className="relative inline-block text-left">
               <div className="flex align-middle gap-4">
