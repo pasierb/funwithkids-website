@@ -53,8 +53,8 @@ function SpotsListItem({ spot, onSelect }: SpotsListItemProps) {
       <div>
         {spot.name}
         <ul>
-          {spot.spot_attractions?.map((attraction) => (
-            <li className="inline-block">
+          {spot.spot_attractions?.map((attraction, idx) => (
+            <li className="inline-block" key={idx}>
               <SpotAttractionTypeIcon type={attraction.type} />
             </li>
           ))}

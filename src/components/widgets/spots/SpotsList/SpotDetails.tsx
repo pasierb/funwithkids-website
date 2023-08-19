@@ -46,8 +46,8 @@ export function SpotDetails({ spot }: SpotDetailsProps) {
         </ul>
 
         <ul>
-          {spot.spot_attractions?.map((attraction) => (
-            <li>
+          {spot.spot_attractions?.map((attraction, idx) => (
+            <li key={idx}>
               <SpotAttractionTypeIcon type={attraction.type} />
               {attraction.name}
             </li>
