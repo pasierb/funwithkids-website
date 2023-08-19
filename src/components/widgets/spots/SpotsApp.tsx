@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { $spots } from '~/stores/spots.store';
+import { $selectedSpot, $spots } from '~/stores/spots.store';
 import { $spotFilters } from '~/stores/spotFilters.store';
 import { supabaseClient } from '~/services/supabase';
 import { MapIcon } from '@heroicons/react/20/solid';
@@ -51,7 +51,20 @@ export function SpotsApp() {
   }
 
   useEffect(() => {
+    const path = window.location.pathname;
     $spotFilters.subscribe(debounce(updateSpots, 500));
+
+    $selectedSpot.listen((spot) => {
+      if (spot) {
+        window.history.pushState(spot, '', `${path}#${spot.id}`);
+      } else {
+        window.history.pushState(null, '', path);
+      }
+    });
+
+    window.addEventListener('popstate', (event) => {
+      $selectedSpot.set(event.state);
+    });
 
     if (window.innerWidth < 768) {
       setIsMobile(true);
