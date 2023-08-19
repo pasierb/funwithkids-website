@@ -51,11 +51,14 @@ function SpotsListItem({ spot, onSelect }: SpotsListItemProps) {
       onClick={() => onSelect(spot)}
     >
       <div>
-        {spot.name}
-        <ul>
+        <p className="text-base">
+          {spot.name}
+        </p>
+
+        <ul className="flex gap-2 mt-4">
           {spot.spot_attractions?.map((attraction, idx) => (
-            <li className="inline-block" key={idx}>
-              <SpotAttractionTypeIcon type={attraction.type} />
+            <li className="block" key={idx}>
+              <SpotAttractionTypeIcon className="w-4 h-4" type={attraction.type} />
             </li>
           ))}
         </ul>

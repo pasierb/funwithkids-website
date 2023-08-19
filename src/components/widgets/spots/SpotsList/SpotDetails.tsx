@@ -20,7 +20,7 @@ export function SpotDetails({ spot }: SpotDetailsProps) {
       <div className="bg-gray-50 px-4 py-6 sm:px-6">
         <div className="flex items-start justify-between space-x-3">
           <div className="space-y-1">
-            <h3 className="text-base font-semibold leading-6 text-gray-900">{spot.name}</h3>
+            <h3 className="text-lg font-semibold leading-6 text-gray-900">{spot.name}</h3>
           </div>
           <div className="flex h-7 items-center">
             <button type="button" className="relative text-gray-400 hover:text-gray-500" onClick={() => handleBack()}>
@@ -31,27 +31,36 @@ export function SpotDetails({ spot }: SpotDetailsProps) {
           </div>
         </div>
       </div>
-      <div className="py-8 px-4">
-        <ul className="border-t border-gray-100 py-4">
-          {spot.website_url && (
-            <AttributeListLitem icon={<GlobeAltIcon className="h-6 w-6" />}>
-              <LinkOut href={spot.website_url}>{spot.website_url}</LinkOut>
-            </AttributeListLitem>
-          )}
-          {spot.google_maps_url && (
-            <AttributeListLitem icon={<MapIcon className="h-6 w-6" />}>
-              <LinkOut href={spot.google_maps_url}>Open in Google Maps</LinkOut>
-            </AttributeListLitem>
-          )}
-        </ul>
+      <div className="py-4 px-4">
+        <section>
+          <ul>
+            {spot.website_url && (
+              <AttributeListLitem icon={<GlobeAltIcon className="h-6 w-6" />}>
+                <LinkOut href={spot.website_url}>{spot.website_url}</LinkOut>
+              </AttributeListLitem>
+            )}
+            {spot.google_maps_url && (
+              <AttributeListLitem icon={<MapIcon className="h-6 w-6" />}>
+                <LinkOut href={spot.google_maps_url}>Open in Google Maps</LinkOut>
+              </AttributeListLitem>
+            )}
+          </ul>
+        </section>
 
-        <ul>
-          {spot.spot_attractions?.map((attraction, idx) => (
-            <AttributeListLitem key={idx} icon={<SpotAttractionTypeIcon type={attraction.type} />}>
-              {attraction.name}
-            </AttributeListLitem>
-          ))}
-        </ul>
+        <section className="border-t border-gray-100 py-4">
+          <h4 className="font-semibold">Attractions</h4>
+
+          <ul className="mt-4">
+            {spot.spot_attractions?.map((attraction, idx) => (
+              <AttributeListLitem
+                key={idx}
+                icon={<SpotAttractionTypeIcon className="w-6 h-6" type={attraction.type} />}
+              >
+                {attraction.name}
+              </AttributeListLitem>
+            ))}
+          </ul>
+        </section>
       </div>
     </section>
   );
