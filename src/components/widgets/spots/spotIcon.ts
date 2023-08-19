@@ -3,6 +3,8 @@ import { Icon } from 'leaflet';
 
 import mapMarkerDefaultImage from '~/assets/images/icons/map-marker-default.svg';
 import mapMarkerPlaygroundImage from '~/assets/images/icons/map-marker-playground.svg';
+import gymnastImage from '~/assets/images/icons/gymnast.svg';
+import parkourImage from '~/assets/images/icons/parkour-silhouette-of-extreme-sport.svg';
 
 const defaultIcon = new Icon({
   iconUrl: attractionTypeImage().src,
@@ -18,6 +20,10 @@ export function attractionTypeImage(attractionType?: AttractionType) {
   switch (attractionType) {
     case 'playground':
       return mapMarkerPlaygroundImage;
+    case 'trampoline_park':
+      return gymnastImage;
+    case 'parkour':
+      return parkourImage;
     default:
       return mapMarkerDefaultImage;
   }

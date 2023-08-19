@@ -49,30 +49,36 @@ export interface Database {
       spots: {
         Row: {
           created_at: string
+          google_maps_url: string | null
           has_restaurant: boolean
           has_toilet: boolean
           id: number
           lat: number
           lon: number
           name: string
+          website_url: string | null
         }
         Insert: {
           created_at?: string
+          google_maps_url?: string | null
           has_restaurant?: boolean
           has_toilet?: boolean
           id?: number
           lat: number
           lon: number
           name: string
+          website_url?: string | null
         }
         Update: {
           created_at?: string
+          google_maps_url?: string | null
           has_restaurant?: boolean
           has_toilet?: boolean
           id?: number
           lat?: number
           lon?: number
           name?: string
+          website_url?: string | null
         }
         Relationships: []
       }

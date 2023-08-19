@@ -1,7 +1,8 @@
 import { useEffect, useState, Fragment } from 'react';
 import { $spots, $selectedSpot } from '~/stores/spots.store';
-import { XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
+import { SpotDetails } from './SpotDetails';
+import { SpotAttractionTypeIcon } from '~/components/widgets/spots/SpotAttractionTypeIcon';
 import type { Spot } from '~/stores/spots.store';
 
 export function SpotsList() {
@@ -49,42 +50,18 @@ function SpotsListItem({ spot, onSelect }: SpotsListItemProps) {
       role="button"
       onClick={() => onSelect(spot)}
     >
-      {spot.name}
+      <div>
+        {spot.name}
+        <ul>
+          {spot.spot_attractions?.map((attraction) => (
+            <li className="inline-block">
+              <SpotAttractionTypeIcon type={attraction.type} />
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <ChevronRightIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
     </li>
-  );
-}
-
-interface SpotDetailsProps {
-  spot: Spot;
-}
-
-function SpotDetails({ spot }: SpotDetailsProps) {
-  function handleBack() {
-    $selectedSpot.set(null);
-  }
-
-  return (
-    <section>
-      {/* Header */}
-      <div className="bg-gray-50 px-4 py-6 sm:px-6">
-        <div className="flex items-start justify-between space-x-3">
-          <div className="space-y-1">
-            <h3 className="text-base font-semibold leading-6 text-gray-900">{spot.name}</h3>
-          </div>
-          <div className="flex h-7 items-center">
-            <button type="button" className="relative text-gray-400 hover:text-gray-500" onClick={() => handleBack()}>
-              <span className="absolute -inset-2.5" />
-              <span className="sr-only">Close panel</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-      </div>
-      <div>
-        <ul>{spot.spot_attractions?.map((attraction) => <li>{attraction.name}</li>)}</ul>
-      </div>
-    </section>
   );
 }

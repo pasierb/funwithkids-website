@@ -17,6 +17,8 @@ export interface Spot {
   lat: number;
   lon: number;
   name: string;
+  google_maps_url: string | null;
+  website_url: string | null;
   spot_attractions?: SpotAttraction[];
 }
 
