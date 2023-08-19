@@ -28,9 +28,9 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
     filters.amenities?.forEach((amenity) => {
       spotsQuery = spotsQuery.is(amenity, true);
     });
-    filters.attractionType?.forEach((attractionType) => {
-      spotsQuery = spotsQuery.eq(`spot_attractions.type`, attractionType);
-    });
+    if (filters.attractionType && filters.attractionType.length > 0) {
+      spotsQuery = spotsQuery.in(`spot_attractions.type`, filters.attractionType);
+    }
     if (filters.query) {
       spotsQuery = spotsQuery.ilike('name', `%${filters.query}%`);
     }
