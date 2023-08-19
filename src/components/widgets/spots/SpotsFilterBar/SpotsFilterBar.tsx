@@ -62,6 +62,10 @@ export function SpotsFilterBar() {
     );
   };
 
+  const handleClearAll = () => {
+    $spotFilters.set({});
+  }
+
   return (
     <div>
       {/* Mobile filter dialog */}
@@ -155,8 +159,11 @@ export function SpotsFilterBar() {
         <section aria-labelledby="filter-heading" className="border-t border-gray-200 py-4">
           <div className="flex items-center justify-between">
             <Menu as="div" className="relative inline-block text-left">
-              <div>
+              <div className='flex align-middle gap-4'>
                 <SpotsQuickSearch />
+                  <button type="button" className="text-gray-500" onClick={handleClearAll}>
+                    Clear all
+                  </button>
               </div>
 
               <Transition
