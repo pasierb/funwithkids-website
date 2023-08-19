@@ -1,6 +1,7 @@
-import { Dialog, Disclosure, Menu, Popover, Transition } from '@headlessui/react';
-import { Fragment, useState, ChangeEvent } from 'react';
+import { Popover, Transition } from '@headlessui/react';
+import { Fragment, ChangeEvent, useState, useEffect } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { $spotFilters } from '~/stores/spotFilters.store';
 
 interface CheckboxPopoverFilterProps {
   name: string;
@@ -13,16 +14,24 @@ interface CheckboxPopoverFilterProps {
 }
 
 export function CheckboxPopoverFilter({ name, id, options, onChange }: CheckboxPopoverFilterProps) {
+  const [values, setValues] = useState<string[]>([]);
+
+  useEffect(() => {
+    $spotFilters.subscribe((spotFilters) => {
+      setValues(spotFilters[id] || []);
+    });
+  }, [$spotFilters]);
+
   return (
     <Popover as="div" key={name} id={`desktop-menu-${id}`} className="relative inline-block text-left">
       <div>
         <Popover.Button className="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
           <span>{name}</span>
-          {/* {sectionIdx === 0 ? (
+          {values.length > 0 ? (
             <span className="ml-1.5 rounded bg-gray-200 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-gray-700">
-              1
+              {values.length}
             </span>
-          ) : null} */}
+          ) : null}
           <ChevronDownIcon
             className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
             aria-hidden="true"
@@ -46,7 +55,8 @@ export function CheckboxPopoverFilter({ name, id, options, onChange }: CheckboxP
                 <input
                   id={`filter-${id}-${optionIdx}`}
                   name={`${id}[]`}
-                  defaultValue={option.value}
+                  value={option.value}
+                  checked={values.includes(option.value)}
                   onChange={(event) => onChange(event, id)}
                   type="checkbox"
                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
