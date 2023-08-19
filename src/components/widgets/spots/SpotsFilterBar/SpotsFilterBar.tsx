@@ -5,6 +5,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { $spotFilters, SpotFilters } from '~/stores/spotFilters.store';
 import { SpotsQuickSearch } from '~/components/widgets/spots/SpotsQuickSearch';
 import { CheckboxPopoverFilter } from './CheckboxPopoverFilter';
+import { AttractionType } from '~/stores/spots.store';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#' },
@@ -17,12 +18,21 @@ const filters: {
   options: { label: string; value: string }[];
 }[] = [
   {
-    id: 'age',
-    name: 'Age',
+    id: 'attractionType',
+    name: 'Attraction Type',
     options: [
-      { value: '0:2', label: '0 - 2' },
-      { value: '3:6', label: '3 - 6' },
-      { value: '7:12', label: '7 - 12' },
+      {
+        label: 'Playground',
+        value: 'playground',
+      },
+      {
+        label: 'Trampoline Park',
+        value: 'trampoline_park',
+      },
+      {
+        label: 'Parkour',
+        value: 'parkour',
+      }
     ],
   },
   {

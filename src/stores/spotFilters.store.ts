@@ -1,8 +1,10 @@
 import { map } from 'nanostores';
+import { AttractionType } from './spots.store';
 
 export type SpotFilters = {
   age?: string[];
   amenities?: string[];
+  attractionType?: AttractionType[];
   query?: string;
 };
 

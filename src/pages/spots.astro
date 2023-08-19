@@ -16,7 +16,7 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
   function updateSpots() {
     let spotsQuery = supabaseClient.from('spots').select(`
         *,
-        spot_attractions (
+        spot_attractions!inner (
           name,
           type,
           age_from,
@@ -27,6 +27,9 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
     const filters = $spotFilters.get();
     filters.amenities?.forEach((amenity) => {
       spotsQuery = spotsQuery.is(amenity, true);
+    });
+    filters.attractionType?.forEach((attractionType) => {
+      spotsQuery = spotsQuery.eq(`spot_attractions.type`, attractionType);
     });
     if (filters.query) {
       spotsQuery = spotsQuery.ilike('name', `%${filters.query}%`);
@@ -64,4 +67,4 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
     <div></div>
   </div>
 </Layout>
-~/components/widgets/spots/SpotsFilterBar/SpotsFilterBar
+ ~/components/widgets/spots/SpotsFilterBar/SpotsFilterBar
