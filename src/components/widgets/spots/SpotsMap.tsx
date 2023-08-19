@@ -11,6 +11,7 @@ export function SpotsMap(props: SpotsMapProps) {
   const mapElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let hasMap = true;
     const map = Leaflet.map(mapElement.current!).setView([47.16646223589143, 8.515760000580993], 13);
     let markers: Leaflet.Marker[] = [];
 
@@ -19,6 +20,8 @@ export function SpotsMap(props: SpotsMapProps) {
     }).addTo(map);
 
     $spots.subscribe((spots) => {
+      if (!hasMap) return;
+
       markers.forEach((marker) => marker.remove());
       markers = spots.map((spot) =>
         Leaflet.marker([spot.lat, spot.lon])
@@ -30,12 +33,13 @@ export function SpotsMap(props: SpotsMapProps) {
       );
     });
     $selectedSpot.subscribe((spot) => {
-      if (!spot) return;
+      if (!hasMap || !spot) return;
 
       map.panTo([spot.lat, spot.lon]);
     });
 
     return () => {
+      hasMap = false;
       map.remove();
     };
   }, [$spots]);
