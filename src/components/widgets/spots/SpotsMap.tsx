@@ -1,6 +1,6 @@
 import { useRef, useEffect, HTMLAttributes } from 'react';
 import * as Leaflet from 'leaflet';
-import { $spots, $selectedSpot } from '~/stores/spots.store';
+import { $spots, $selectedSpot, $mapSelectedSpot } from '~/stores/spots.store';
 import { spotMapMarkerIcon } from './spotIcon';
 
 import 'leaflet/dist/leaflet.css';
@@ -29,6 +29,7 @@ export function SpotsMap(props: SpotsMapProps) {
           .setIcon(spotMapMarkerIcon(spot))
           .on('click', () => {
             $selectedSpot.set(spot);
+            $mapSelectedSpot.set(spot);
           })
       );
     });

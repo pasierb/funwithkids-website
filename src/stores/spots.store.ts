@@ -24,3 +24,4 @@ export interface Spot {
 
 export const $spots = atom<Spot[]>([]);
 export const $selectedSpot = atom<Spot | null>(null);
+export const $mapSelectedSpot = atom<Spot | null>(null);

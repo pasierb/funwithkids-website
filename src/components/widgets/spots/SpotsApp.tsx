@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { $spots } from '~/stores/spots.store';
+import { $spots, $selectedSpot, $mapSelectedSpot } from '~/stores/spots.store';
 import { $spotFilters } from '~/stores/spotFilters.store';
 import { supabaseClient } from '~/services/supabase';
 import { MapIcon } from '@heroicons/react/20/solid';
@@ -51,6 +51,10 @@ export function SpotsApp() {
       setIsMobile(true);
       setMapOpen(true);
     }
+
+    // $mapSelectedSpot.listen((spot) => {
+    //   setMapOpen(false);
+    // });
   }, []);
 
   return (
@@ -70,7 +74,7 @@ export function SpotsApp() {
           </div>
         )}
 
-        <div className="fixed z-[1000] bottom-8 w-full flex justify-center pointer-events-none">
+        <div className="fixed z-[1000] bottom-8 w-full flex justify-center pointer-events-none md:hidden">
           <button
             className="pointer-events-auto flex align-middle rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             onClick={() => setMapOpen(!mapOpen)}
