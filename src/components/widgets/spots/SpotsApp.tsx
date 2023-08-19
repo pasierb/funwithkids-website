@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { $spots, $selectedSpot, $mapSelectedSpot } from '~/stores/spots.store';
+import { $spots } from '~/stores/spots.store';
 import { $spotFilters } from '~/stores/spotFilters.store';
 import { supabaseClient } from '~/services/supabase';
 import { MapIcon } from '@heroicons/react/20/solid';
@@ -44,6 +44,12 @@ export function SpotsApp() {
   const [mapOpen, setMapOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  function handleSpotClick(spot: Spot) {
+    if (mapOpen) {
+      setMapOpen(false);
+    }
+  }
+
   useEffect(() => {
     $spotFilters.subscribe(debounce(updateSpots, 500));
 
@@ -51,10 +57,6 @@ export function SpotsApp() {
       setIsMobile(true);
       setMapOpen(true);
     }
-
-    // $mapSelectedSpot.listen((spot) => {
-    //   setMapOpen(false);
-    // });
   }, []);
 
   return (
@@ -70,7 +72,7 @@ export function SpotsApp() {
 
         {(!isMobile || mapOpen) && (
           <div className="grow flex flex-col">
-            <SpotsMap className="grow" key={`open-${mapOpen}`} />
+            <SpotsMap onSpotClick={handleSpotClick} className="grow" key={`open-${mapOpen}`} />
           </div>
         )}
 

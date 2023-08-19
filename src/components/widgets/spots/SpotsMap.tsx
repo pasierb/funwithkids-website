@@ -1,13 +1,16 @@
 import { useRef, useEffect, HTMLAttributes } from 'react';
 import * as Leaflet from 'leaflet';
-import { $spots, $selectedSpot, $mapSelectedSpot } from '~/stores/spots.store';
+import { $spots, $selectedSpot } from '~/stores/spots.store';
+import type { Spot } from '~/stores/spots.store';
 import { spotMapMarkerIcon } from './spotIcon';
 
 import 'leaflet/dist/leaflet.css';
 
-interface SpotsMapProps extends HTMLAttributes<HTMLDivElement> {}
+interface SpotsMapProps extends HTMLAttributes<HTMLDivElement> {
+  onSpotClick?: (spot: Spot) => void;
+}
 
-export function SpotsMap(props: SpotsMapProps) {
+export function SpotsMap({ onSpotClick, ...props }: SpotsMapProps) {
   const mapElement = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,7 +32,7 @@ export function SpotsMap(props: SpotsMapProps) {
           .setIcon(spotMapMarkerIcon(spot))
           .on('click', () => {
             $selectedSpot.set(spot);
-            $mapSelectedSpot.set(spot);
+            onSpotClick?.(spot);
           })
       );
     });
