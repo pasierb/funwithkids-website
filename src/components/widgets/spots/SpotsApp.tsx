@@ -70,7 +70,7 @@ export function SpotsApp() {
           </div>
         )}
 
-        <div className="absolute z-[1000] bottom-8 w-full flex justify-center pointer-events-none">
+        <div className="fixed z-[1000] bottom-8 w-full flex justify-center pointer-events-none">
           <button
             className="pointer-events-auto flex align-middle rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             onClick={() => setMapOpen(!mapOpen)}
