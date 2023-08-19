@@ -70,13 +70,15 @@ export function SpotsApp() {
           </div>
         )}
 
-        <button className="absolute z-[1000] lg:hidden bottom-2 left-[50%] flex align-middle rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={() => setMapOpen(!mapOpen)}>
-          <MapIcon className="w-6 h-6" />
-          <span>
-
-          Map
-          </span>
-        </button>
+        <div className="absolute z-[1000] bottom-8 w-full flex justify-center pointer-events-none">
+          <button
+            className="pointer-events-auto flex align-middle rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            onClick={() => setMapOpen(!mapOpen)}
+          >
+            <MapIcon className="w-6 h-6" />
+            <span>Map</span>
+          </button>
+        </div>
       </div>
     </Fragment>
   );
