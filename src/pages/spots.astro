@@ -38,7 +38,6 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
         return;
       }
 
-      console.log(spots);
       $spots.set(spots);
     });
   }
@@ -55,7 +54,7 @@ import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
     </div>
 
     <div class="grow flex flex-row">
-      <div class="lg:w-1/3">
+      <div class="w-1/3 lg:w-1/3">
         <SpotsList client:only="react" />
       </div>
       <div class="grow flex flex-col">

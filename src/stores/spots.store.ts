@@ -1,6 +1,6 @@
 import { atom } from 'nanostores';
 
-export type AttractionType = 'trampoline_park' | 'playground' | 'parkour';
+export type AttractionType = 'trampoline_park' | 'playground' | 'parkour' | null;
 
 export interface SpotAttraction {
   name: string;

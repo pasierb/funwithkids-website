@@ -1,12 +1,11 @@
 import { useRef, useEffect, HTMLAttributes } from 'react';
 import * as Leaflet from 'leaflet';
 import { $spots, $selectedSpot } from '~/stores/spots.store';
+import { spotMapMarkerIcon } from './spotIcon';
 
 import 'leaflet/dist/leaflet.css';
 
-interface SpotsMapProps extends HTMLAttributes<HTMLDivElement> {
-
-}
+interface SpotsMapProps extends HTMLAttributes<HTMLDivElement> {}
 
 export function SpotsMap(props: SpotsMapProps) {
   const mapElement = useRef<HTMLDivElement>(null);
@@ -21,9 +20,10 @@ export function SpotsMap(props: SpotsMapProps) {
 
     $spots.subscribe((spots) => {
       markers.forEach((marker) => marker.remove());
-      markers = spots.map((spot) => 
+      markers = spots.map((spot) =>
         Leaflet.marker([spot.lat, spot.lon])
           .addTo(map)
+          .setIcon(spotMapMarkerIcon(spot))
           .on('click', () => {
             $selectedSpot.set(spot);
           })

@@ -82,7 +82,9 @@ function SpotDetails({ spot }: SpotDetailsProps) {
           </div>
         </div>
       </div>
-      <div>{spot.spot_attractions?.map((attraction) => <div>{attraction.name}</div>)}</div>
+      <div>
+        <ul>{spot.spot_attractions?.map((attraction) => <li>{attraction.name}</li>)}</ul>
+      </div>
     </section>
   );
 }
