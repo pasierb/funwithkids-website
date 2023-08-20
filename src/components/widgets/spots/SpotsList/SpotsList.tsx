@@ -1,7 +1,6 @@
 import { useEffect, useState, Fragment } from 'react';
 import { $spots, $selectedSpot } from '~/stores/spots.store';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
-import { SpotDetails } from './SpotDetails';
 import { SpotAttractionTypeIcon } from '~/components/widgets/spots/SpotAttractionTypeIcon';
 import type { Spot } from '~/stores/spots.store';
 
@@ -25,15 +24,11 @@ export function SpotsList() {
 
   return (
     <Fragment>
-      {!selectedSpot ? (
-        <ul role="list" className="divide-y divide-gray-100">
-          {spots.map((spot) => (
-            <SpotsListItem key={[spot.lat, spot.lon].join('-')} spot={spot} onSelect={handleSelectSpot} />
-          ))}
-        </ul>
-      ) : (
-        <SpotDetails spot={selectedSpot} />
-      )}
+      <ul role="list" className="divide-y divide-gray-100">
+        {spots.map((spot) => (
+          <SpotsListItem key={[spot.lat, spot.lon].join('-')} spot={spot} onSelect={handleSelectSpot} />
+        ))}
+      </ul>
     </Fragment>
   );
 }
@@ -51,9 +46,7 @@ function SpotsListItem({ spot, onSelect }: SpotsListItemProps) {
       onClick={() => onSelect(spot)}
     >
       <div>
-        <p className="text-base">
-          {spot.name}
-        </p>
+        <p className="text-base">{spot.name}</p>
 
         <ul className="flex gap-2 mt-4">
           {spot.spot_attractions?.map((attraction, idx) => (

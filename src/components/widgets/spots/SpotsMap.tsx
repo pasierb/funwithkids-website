@@ -31,7 +31,6 @@ export function SpotsMap({ onSpotClick, ...props }: SpotsMapProps) {
           .addTo(map)
           .setIcon(spotMapMarkerIcon(spot))
           .on('click', () => {
-            $selectedSpot.set(spot);
             onSpotClick?.(spot);
           })
       );
