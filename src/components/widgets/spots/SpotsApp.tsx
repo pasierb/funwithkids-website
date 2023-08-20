@@ -80,7 +80,6 @@ export function SpotsApp() {
   }
 
   useEffect(() => {
-    console.log('update app state', { mapOpen, selectedSpot });
     updateApplicationUrl(selectedSpot, mapOpen);
   }, [mapOpen, selectedSpot]);
 
