@@ -1,10 +1,17 @@
-import { useRef, useEffect, HTMLAttributes } from 'react';
+import { useRef, useEffect, HTMLAttributes, Fragment } from 'react';
 import * as Leaflet from 'leaflet';
 import { $spots, $selectedSpot } from '~/stores/spots.store';
 import type { Spot } from '~/stores/spots.store';
 import { spotMapMarkerIcon } from './spotIcon';
+import currentPositionImage from '~/assets/images/icons/crosshair.svg';
 
 import 'leaflet/dist/leaflet.css';
+
+function getCurrentLocation() {
+  return new Promise<GeolocationPosition>((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+}
 
 interface SpotsMapProps extends HTMLAttributes<HTMLDivElement> {
   onSpotClick?: (spot: Spot) => void;
@@ -12,10 +19,20 @@ interface SpotsMapProps extends HTMLAttributes<HTMLDivElement> {
 
 export function SpotsMap({ onSpotClick, ...props }: SpotsMapProps) {
   const mapElement = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<Leaflet.Map | null>(null);
+
+  function handleMoveToCurrentPosition() {
+    getCurrentLocation().then((position) => {
+      if (mapRef.current) {
+        mapRef.current.panTo([position.coords.latitude, position.coords.longitude]);
+      }
+    });
+  }
 
   useEffect(() => {
     let hasMap = true;
     const map = Leaflet.map(mapElement.current!).setView([47.16646223589143, 8.515760000580993], 13);
+    mapRef.current = map;
     let markers: Leaflet.Marker[] = [];
 
     Leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -41,11 +58,20 @@ export function SpotsMap({ onSpotClick, ...props }: SpotsMapProps) {
       map.panTo([spot.lat, spot.lon]);
     });
 
+    handleMoveToCurrentPosition();
+
     return () => {
       hasMap = false;
       map.remove();
     };
   }, [$spots]);
 
-  return <div {...props} ref={mapElement}></div>;
+  return (
+    <Fragment>
+      <div {...props} ref={mapElement}></div>
+      <button className="fixed bottom-8 right-4 z-[500]" onClick={handleMoveToCurrentPosition}>
+        <img src={currentPositionImage.src} alt="Current position" className="w-8 h-8" />
+      </button>
+    </Fragment>
+  );
 }
