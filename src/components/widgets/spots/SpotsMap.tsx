@@ -28,6 +28,7 @@ const attractionTypeIconMap = {
   [AttractionType.playground]: createIcon([attractionTypeImage(AttractionType.playground).src]),
   [AttractionType.parkour]: createIcon([attractionTypeImage(AttractionType.parkour).src]),
   [AttractionType.trampolinePark]: createIcon([attractionTypeImage(AttractionType.trampolinePark).src]),
+  [AttractionType.swimming]: createIcon([attractionTypeImage(AttractionType.swimming).src]),
 };
 
 function spotIcon(spot: Spot) {

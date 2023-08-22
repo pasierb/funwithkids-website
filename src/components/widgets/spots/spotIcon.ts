@@ -4,6 +4,7 @@ import mapMarkerDefaultImage from '~/assets/images/icons/map-marker-default.svg'
 import mapMarkerPlaygroundImage from '~/assets/images/icons/playground.svg';
 import gymnastImage from '~/assets/images/icons/trampoline.svg';
 import parkourImage from '~/assets/images/icons/parkour.svg';
+import swimmingImage from '~/assets/images/icons/swimming.svg';
 
 export function attractionTypeImage(attractionType?: AttractionType) {
   switch (attractionType) {
@@ -13,6 +14,8 @@ export function attractionTypeImage(attractionType?: AttractionType) {
       return gymnastImage;
     case 'parkour':
       return parkourImage;
+    case 'swimming':
+      return swimmingImage;
     default:
       return mapMarkerDefaultImage;
   }

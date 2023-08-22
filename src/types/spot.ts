@@ -4,6 +4,7 @@ export enum AttractionType {
   playground = 'playground',
   trampolinePark = 'trampoline_park',
   parkour = 'parkour',
+  swimming = 'swimming',
 }
 
 export interface SpotAttraction {

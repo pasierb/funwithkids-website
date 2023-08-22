@@ -146,7 +146,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      attraction_type: "playground" | "trampoline_park" | "parkour"
+      attraction_type: "playground" | "trampoline_park" | "parkour" | "swimming"
       user_role: "spots_moderator"
     }
     CompositeTypes: {
