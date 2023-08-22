@@ -46,6 +46,34 @@ export interface Database {
           }
         ]
       }
+      spot_proposals: {
+        Row: {
+          created_at: string
+          data: Json
+          id: number
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          data: Json
+          id?: number
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          data?: Json
+          id?: number
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "spot_proposals_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       spots: {
         Row: {
           created_at: string
@@ -82,6 +110,34 @@ export interface Database {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: number
+          role: Database["public"]["Enums"]["user_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          role: Database["public"]["Enums"]["user_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          role?: Database["public"]["Enums"]["user_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -91,6 +147,7 @@ export interface Database {
     }
     Enums: {
       attraction_type: "playground" | "trampoline_park" | "parkour"
+      user_role: "spots_moderator"
     }
     CompositeTypes: {
       [_ in never]: never

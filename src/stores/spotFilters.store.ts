@@ -1,5 +1,5 @@
 import { map } from 'nanostores';
-import { AttractionType } from './spots.store';
+import { AttractionType } from '~/types/spot';
 
 export type SpotFilters = {
   age?: string[];

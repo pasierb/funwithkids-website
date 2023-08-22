@@ -1,0 +1,32 @@
+.spots-map {
+  --map-pin-size: 40px;
+  --map-pin-base-size: 12px;
+}
+
+.spots-map-pin-icon::before {
+  content: '';
+  display: block;
+  width: var(--map-pin-size);
+  height: var(--map-pin-size);
+  background-image: url('/pin.svg');
+  background-size: contain;
+  position: absolute;
+  left: calc((var(--map-pin-base-size) / 2) - (var(--map-pin-size) / 2));
+  bottom: -5px;
+}
+
+.spots-map-pin-icon > .icon {
+  box-sizing: border-box;
+  position: absolute;
+  left: calc((var(--map-pin-base-size) / 2) - (var(--map-pin-size) / 2));
+  bottom: calc(var(--map-pin-base-size) / 2);
+  width: var(--map-pin-size);
+  height: var(--map-pin-size);
+  border: 3px solid;
+  border-radius: 30%;
+  background-image: var(--background-image-url);
+  background-size: 85%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #fff;
+}
