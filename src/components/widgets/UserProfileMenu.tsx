@@ -15,10 +15,6 @@ export function UserProfileMenu() {
     });
   }, []);
 
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
-
   function handleSignOut() {
     supabaseClient.auth.signOut();
   }
@@ -29,7 +25,7 @@ export function UserProfileMenu() {
     });
   }
 
-  return (
+  return user && (
     <Menu as="div" className="relative ml-3">
       <div>
         <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
