@@ -1,13 +1,16 @@
 import { Fragment, useEffect, useState } from 'react';
-import { $selectedSpot, $spots, Spot } from '~/stores/spots.store';
+import { $selectedSpot, $spots } from '~/stores/spots.store';
 import { $spotFilters } from '~/stores/spotFilters.store';
 import { supabaseClient } from '~/services/supabase';
-import { MapIcon } from '@heroicons/react/20/solid';
+import { ListBulletIcon } from '@heroicons/react/20/solid';
 import debounce from 'lodash-es/debounce';
 import { SpotsFilterBar } from '~/components/widgets/spots/SpotsFilterBar';
 import { SpotsMap } from '~/components/widgets/spots/SpotsMap';
 import { SpotsList } from '~/components/widgets/spots/SpotsList';
 import { SpotDetails } from '~/components/widgets/spots/SpotDetails';
+import { Spot } from '~/types/spot';
+import { SlidePanel } from './SlidePanel';
+import { set } from 'lodash-es';
 
 function updateSpots() {
   let spotsQuery = supabaseClient.from('spots').select(`
@@ -42,21 +45,19 @@ function updateSpots() {
 }
 
 export function SpotsApp() {
-  const [mapOpen, setMapOpen] = useState(true);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [spotDetailsOpen, setSpotDetailsOpen] = useState(false);
+  const [spotListOpen, setSpotListOpen] = useState(false);
+  const [spots, setSpots] = useState<Spot[]>([]);
   const [selectedSpot, setSelectedSpot] = useState<Spot | null>(null);
 
-  function updateApplicationUrl(spot: Spot | null, mapOpen: boolean) {
+  function updateApplicationUrl(spot: Spot | null) {
     const url = new URL(window.location.href);
-    url.searchParams.set('map', mapOpen ? '1' : '0');
     url.searchParams.set('spot', spot?.id.toString() ?? '');
 
-    window.history.pushState({ spot: $selectedSpot.get(), mapOpen }, '', url.toString());
+    window.history.pushState({ spot: $selectedSpot.get() }, '', url.toString());
   }
 
   function updateApplicationStateFromUrl(url: URL) {
-    setMapOpen(url.searchParams.get('map') === '1');
-
     let spot: Spot | undefined;
     if (url.searchParams.get('spot')) {
       const spotId = parseInt(url.searchParams.get('spot')!);
@@ -67,21 +68,24 @@ export function SpotsApp() {
 
   // Handle clicks on the map toggle button.
   function handleMapToggle() {
-    setMapOpen((val) => !val);
+    setSpotListOpen((spotListOpen) => !spotListOpen);
   }
 
   // Handle clicks on the map.
   function handleMapSpotClick(spot: Spot) {
-    if (mapOpen) {
-      setMapOpen(false);
-    }
-
     $selectedSpot.set(spot);
+    setSpotDetailsOpen(true);
+  }
+
+  function handleSelectSpot(spot: Spot) {
+    $selectedSpot.set(spot);
+    setSpotListOpen(false);
+    setSpotDetailsOpen(true);
   }
 
   useEffect(() => {
-    updateApplicationUrl(selectedSpot, mapOpen);
-  }, [mapOpen, selectedSpot]);
+    updateApplicationUrl(selectedSpot);
+  }, [selectedSpot]);
 
   useEffect(() => {
     // Update spots when filters change.
@@ -89,6 +93,8 @@ export function SpotsApp() {
 
     // When the selected spot changes, update the URL.
     $selectedSpot.listen(setSelectedSpot);
+
+    $spots.listen((spots) => setSpots([...spots]));
 
     // When the URL changes, update application state.
     window.addEventListener('popstate', (event) => {
@@ -104,23 +110,28 @@ export function SpotsApp() {
       </div>
 
       <div className="grow flex flex-row relative">
-        <div className={`w-full md:w-1/2 lg:w-1/3 ${mapOpen ? 'hidden' : null}`}>
-          {selectedSpot ? <SpotDetails spot={selectedSpot} /> : <SpotsList />}
+        <SlidePanel
+          isOpen={spotDetailsOpen}
+          onClose={() => setSpotDetailsOpen(false)}
+          title={selectedSpot ? selectedSpot.name : ''}
+        >
+          {selectedSpot && <SpotDetails spot={selectedSpot} />}
+        </SlidePanel>
+
+        <SlidePanel isOpen={spotListOpen} onClose={() => setSpotListOpen(false)} title="Spots">
+          <SpotsList onSelectSpot={handleSelectSpot} spots={spots} />
+        </SlidePanel>
+
+        <div className="grow flex flex-col">
+          <SpotsMap onSpotClick={handleMapSpotClick} className="grow" />
         </div>
 
-        {(!isMobile || mapOpen) && (
-          <div className="grow flex flex-col">
-            <SpotsMap onSpotClick={handleMapSpotClick} className="grow" key={`open-${mapOpen}`} />
-          </div>
-        )}
-
-        <div className="fixed z-[1000] bottom-8 w-full flex justify-center pointer-events-none md:hidden">
+        <div className="fixed z-[410] bottom-8 w-full flex justify-center pointer-events-none">
           <button
-            className="pointer-events-auto flex align-middle rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="pointer-events-auto flex align-baseline rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             onClick={handleMapToggle}
           >
-            <MapIcon className="w-6 h-6" />
-            <span>Map</span>
+            <span>List</span>
           </button>
         </div>
       </div>

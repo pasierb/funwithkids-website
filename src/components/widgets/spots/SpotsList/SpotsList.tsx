@@ -2,31 +2,19 @@ import { useEffect, useState, Fragment } from 'react';
 import { $spots, $selectedSpot } from '~/stores/spots.store';
 import { ChevronRightIcon } from '@heroicons/react/20/solid';
 import { SpotAttractionTypeIcon } from '~/components/widgets/spots/SpotAttractionTypeIcon';
-import type { Spot } from '~/stores/spots.store';
+import { Spot } from '~/types/spot';
 
-export function SpotsList() {
-  const [spots, setSpots] = useState<Spot[]>([]);
-  const [selectedSpot, setSelectedSpot] = useState<Spot | null>(null);
+interface SpotsListProps {
+  onSelectSpot: (spot: Spot) => void;
+  spots: Spot[];
+}
 
-  useEffect(() => {
-    $spots.subscribe((spots) => {
-      setSpots([...spots]);
-    });
-
-    $selectedSpot.subscribe((spot) => {
-      setSelectedSpot(spot);
-    });
-  }, [$spots]);
-
-  function handleSelectSpot(spot: Spot) {
-    $selectedSpot.set(spot);
-  }
-
+export function SpotsList({ spots = [], onSelectSpot }: SpotsListProps) {
   return (
     <Fragment>
       <ul role="list" className="divide-y divide-gray-100">
         {spots.map((spot) => (
-          <SpotsListItem key={[spot.lat, spot.lon].join('-')} spot={spot} onSelect={handleSelectSpot} />
+          <SpotsListItem key={[spot.lat, spot.lon].join('-')} spot={spot} onSelect={onSelectSpot} />
         ))}
       </ul>
     </Fragment>
