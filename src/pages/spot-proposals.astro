@@ -1,0 +1,10 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import Headline from '~/components/blog/Headline.astro';
+import { SpotProposals as SpotProposalsComponent } from '~/components/widgets/spots/SpotProposals';
+---
+
+<PageLayout>
+  <Headline title="Your proposals" />
+  <SpotProposalsComponent client:only="react" />
+</PageLayout>
